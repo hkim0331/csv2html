@@ -27,17 +27,19 @@ def make_html(dir, db, title, r, c)
 # -*- mode: ruby -*-
 require 'cgi'
 require 'sequel'
+
 cgi = CGI.new
+
 print <<EOH
 content-type: text/html
 
 <html>
 <head>
 <meta charset="utf-8">
-<title>index.cgi</title>
+<title>#{title}</title>
 </head>
 <body>
-<h1>index.cgi</h1>
+<h1>#{title}</h1>
 EOH
 
 if ENV['REQUEST_METHOD'] =~ /GET/
@@ -48,9 +50,11 @@ if ENV['REQUEST_METHOD'] =~ /GET/
     puts "<tr>"
     (0..#{c}).each do |col|
       ds.where(row: row, col: col).each do |item|
-        puts "<td>"
-        puts item[:data]
-        puts "</td>"
+        puts "<td><form method='post'>"
+        puts "<input type='hidden' name='row' value='" + row.to_s + "'>"
+        puts "<input type='hidden' name='col' value='" + col.to_s + "'>"
+        puts "<input name='data' value='" + item[:data] +"'>"
+        puts "</form></td>"
       end
     end
     puts "</tr>"
