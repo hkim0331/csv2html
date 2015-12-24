@@ -29,8 +29,10 @@ require 'cgi'
 require 'sequel'
 
 cgi = CGI.new
+ds = Sequel.sqlite("#{db}")[:tbl]
 
-print <<EOH
+if ENV['REQUEST_METHOD'] =~ /GET/
+  print <<EOH
 content-type: text/html
 
 <html>
@@ -42,9 +44,6 @@ content-type: text/html
 <h1>#{title}</h1>
 EOH
 
-ds = Sequel.sqlite("#{db}")[:tbl]
-
-if ENV['REQUEST_METHOD'] =~ /GET/
   # display table
   puts "<table>"
   (0..#{r}).each do |row|
@@ -63,9 +62,14 @@ if ENV['REQUEST_METHOD'] =~ /GET/
   puts "</table>"
   puts "<hr>programmed by hkimura."
 else
-  puts "row:" + cgi['row'] + "<br>"
-  puts "col:" + cgi['col'] + "<br>"
-  puts "data:" + cgi['data'] + "<br>"
+  print cgi.header({
+  "status" => "REDIRECT",
+  "location" => "index.cgi"})
+
+  puts "<h1>#{title}, updated</h1>"
+#  puts "row:" + cgi['row'] + "<br>"
+#  puts "col:" + cgi['col'] + "<br>"
+#  puts "data:" + cgi['data'] + "<br>"
   ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
 end
 
