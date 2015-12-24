@@ -42,9 +42,10 @@ content-type: text/html
 <h1>#{title}</h1>
 EOH
 
+ds = Sequel.sqlite("#{db}")[:tbl]
+
 if ENV['REQUEST_METHOD'] =~ /GET/
   # display table
-  ds = Sequel.sqlite("#{db}")[:tbl]
   puts "<table>"
   (0..#{r}).each do |row|
     puts "<tr>"
@@ -53,15 +54,19 @@ if ENV['REQUEST_METHOD'] =~ /GET/
         puts "<td><form method='post'>"
         puts "<input type='hidden' name='row' value='" + row.to_s + "'>"
         puts "<input type='hidden' name='col' value='" + col.to_s + "'>"
-        puts "<input name='data' value='" + item[:data] +"'>"
+        puts "<input name='data' value='" + item[:data] + "'>"
         puts "</form></td>"
       end
     end
     puts "</tr>"
   end
   puts "</table>"
+  puts "<hr>programmed by hkimura."
 else
-  puts "not yet"
+  puts "row:" + cgi['row'] + "<br>"
+  puts "col:" + cgi['col'] + "<br>"
+  puts "data:" + cgi['data'] + "<br>"
+  ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
 end
 
 EOD
