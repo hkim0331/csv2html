@@ -41,16 +41,21 @@ content-type: text/html
 EOH
 
 if ENV['REQUEST_METHOD'] =~ /GET/
-# display table
-ds = Sequel.sqlite("#{db}")[:tbl]
-(0..#{r}).each do |row|
-  (0..#{c}).each do |col|
-    ds.where(row: row, col: col).each do |item|
-      puts item[:data]
+  # display table
+  ds = Sequel.sqlite("#{db}")[:tbl]
+  puts "<table>"
+  (0..#{r}).each do |row|
+    puts "<tr>"
+    (0..#{c}).each do |col|
+      ds.where(row: row, col: col).each do |item|
+        puts "<td>"
+        puts item[:data]
+        puts "</td>"
+      end
     end
-    puts "<br>"
+    puts "</tr>"
   end
-end
+  puts "</table>"
 else
   puts "not yet"
 end
