@@ -41,6 +41,11 @@ content-type: text/html
 <head>
 <meta charset="utf-8">
 <title>#{title}</title>
+<style>
+table {border-collapse: collapse;}
+th, td {border: 0px;}
+form {margin:0px;}
+</style>
 </head>
 <body>
 <h1>#{title}</h1>
@@ -67,12 +72,15 @@ else
   print cgi.header({
   "status" => "REDIRECT",
   "location" => "index.cgi"})
-
-  puts "<h1>#{title}, updated</h1>"
-#  puts "row:" + cgi['row'] + "<br>"
-#  puts "col:" + cgi['col'] + "<br>"
-#  puts "data:" + cgi['data'] + "<br>"
   ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
+
+#リダイレクトするので、puts されない。
+#puts "<h1>#{title}, updated</h1>"
+#
+#puts "row:" + cgi['row'] + "<br>"
+#puts "col:" + cgi['col'] + "<br>"
+#puts "data:" + cgi['data'] + "<br>"
+
 end
 
 EOD
