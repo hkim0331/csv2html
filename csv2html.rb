@@ -8,7 +8,7 @@ def usage(s)
   print <<EOU
 #{s}
 usage:
-$ #{$0} -i input -o outdir -t title -d db
+$ #{$0} -i input.csv -o dir -t 'title' -d db
 
 --input, --output --title and --database are also available.
 
@@ -92,13 +92,13 @@ while (arg = ARGV.shift)
   case arg
   when /\A--debug/
     $debug = true
-  when /\A(-i)|(--input)/
+  when /\A(--input)|(-i)/
     infile = ARGV.shift
-  when /\A(-o)|(--output)/
+  when /\A(--output)|(-o)/
     outdir = ARGV.shift
-  when /\A(-t)|(--title)/
+  when /\A(--title)|(-t)/
     title = ARGV.shift
-  when /\A(-d)|(--database)/
+  when /\A(--database)|(-d)/
     db = ARGV.shift
   else
     usage("unknown param: #{arg}")
