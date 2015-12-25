@@ -2,8 +2,13 @@ sample:
 	./csv2html.rb --input sample.csv --out out --title sample --database sqlite3.db
 
 # server は ruby の HTTP サーバ。
-run:
-	server --root out
+start:
+	./server --root out 2>&1 | ./pid.rb &
+
+stop:
+	kill -INT `cat pid`
+	${RM} pid
 
 clean:
-	rm -rf out
+	${RM} *.bak
+	${RM} -rf out

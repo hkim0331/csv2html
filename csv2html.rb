@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
+VERSION = '0.1.1'
+
 require 'sequel'
 require 'csv'
 
@@ -60,7 +62,7 @@ EOH
     puts "</tr>"
   end
   puts "</table>"
-  puts "<hr>programmed by hkimura."
+  puts "<hr>programmed by hkimura, #{VERSION}."
 else
   print cgi.header({
   "status" => "REDIRECT",
