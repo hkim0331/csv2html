@@ -28,11 +28,11 @@ $ ./csv2html.rb --input input.csv --out out --db sqlite3.db
 
 ## TODO
 
-* [SOLVED: CSS --- テーブルの列の間が上下に広すぎる。by form {margin:0px;}]
 * ノート、キャプション？補足説明 --- テーブルのほかに表示したいテキストもある。
-* [SOLVED: 実行の度に rm -r out はめんどくさいぞ。by prepearing Makefile.]
 * アップデートしたのがわかりにくい。
 * 行番号、列番号を表示するか？
+* [SOLVED: CSS --- テーブルの列の間が上下に広すぎる。by form {margin:0px;}]
+* [SOLVED: 実行の度に rm -r out はめんどくさいぞ。by prepearing Makefile.]
 
 ## author
 

@@ -44,7 +44,7 @@ content-type: text/html
 <style>
 table {border-collapse: collapse;}
 th, td {border: 0px;}
-form {margin:0px;}
+form {margin: 0px;}
 </style>
 </head>
 <body>
@@ -69,10 +69,11 @@ EOH
   puts "</table>"
   puts "<hr>programmed by hkimura, #{VERSION}."
 else
+  ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
+
   print cgi.header({
   "status" => "REDIRECT",
   "location" => "index.cgi"})
-  ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
 
 #リダイレクトするので、puts されない。
 #puts "<h1>#{title}, updated</h1>"
@@ -93,9 +94,9 @@ end
 #
 
 $debug = false
-infile = 'input.csv'
+infile = 'sample.csv'
 outdir = 'out'
-title = 'csv2html'
+title = 'csv2html sample'
 db = 'sqlite3.db'
 
 while (arg = ARGV.shift)
