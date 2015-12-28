@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-VERSION = '0.1.1'
+VERSION = '0.1.3'
 
 require 'sequel'
 require 'csv'
@@ -12,7 +12,7 @@ def usage(s)
 usage:
 $ #{$0} -i input.csv -o dir -t 'title' -d db
 
---input, --output --title and --database are also available.
+--input, --outdir --title and --database are also available.
 
 EOU
   exit(1)
@@ -41,6 +41,11 @@ content-type: text/html
 <head>
 <meta charset="utf-8">
 <title>#{title}</title>
+<style>
+table {border-collapse: collapse;}
+th, td {border: 0px;}
+form {margin: 0px;}
+</style>
 </head>
 <body>
 <h1>#{title}</h1>
@@ -64,15 +69,19 @@ EOH
   puts "</table>"
   puts "<hr>programmed by hkimura, #{VERSION}."
 else
+  ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
+
   print cgi.header({
   "status" => "REDIRECT",
   "location" => "index.cgi"})
 
-  puts "<h1>#{title}, updated</h1>"
-#  puts "row:" + cgi['row'] + "<br>"
-#  puts "col:" + cgi['col'] + "<br>"
-#  puts "data:" + cgi['data'] + "<br>"
-  ds.where(row: cgi['row'], col: cgi['col']).update(data: cgi['data'])
+#リダイレクトするので、puts されない。
+#puts "<h1>#{title}, updated</h1>"
+#
+#puts "row:" + cgi['row'] + "<br>"
+#puts "col:" + cgi['col'] + "<br>"
+#puts "data:" + cgi['data'] + "<br>"
+
 end
 
 EOD
@@ -85,9 +94,9 @@ end
 #
 
 $debug = false
-infile = 'input.csv'
-outdir = 'out'
-title = 'csv2html'
+infile = 'sample.csv'
+outdir = 'public'
+title = 'csv2html sample'
 db = 'sqlite3.db'
 
 while (arg = ARGV.shift)
@@ -96,7 +105,7 @@ while (arg = ARGV.shift)
     $debug = true
   when /\A(--input)|(-i)/
     infile = ARGV.shift
-  when /\A(--output)|(-o)/
+  when /\A(--outdir)|(-o)/
     outdir = ARGV.shift
   when /\A(--title)|(-t)/
     title = ARGV.shift
