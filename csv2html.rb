@@ -32,6 +32,7 @@ require 'sequel'
 
 cgi = CGI.new
 ds = Sequel.sqlite("#{db}")[:tbl]
+th = Sequel.sqlite("#{db}")[:th]
 
 if ENV['REQUEST_METHOD'] =~ /GET/
   print <<EOH
@@ -56,16 +57,8 @@ EOH
 
   # display table
   puts "<table>"
-  #
-  # FIXME: header, here. must generate automatically.
-  puts "<tr>"
-  puts "<th></th>"
-  puts "<th>sid</th>"
-  puts "<th>uid</th>"
-  puts "<th>rid</th>"
-  puts "</tr>"
   n = 0
-  (0..#{r}).each do |row|
+  (0...#{r}).each do |row|
     puts "<tr><td>" + n.to_s + "</td>"
     n += 1
     (0..#{c}).each do |col|
@@ -89,14 +82,6 @@ else
   print cgi.header({
   "status" => "REDIRECT",
   "location" => "index.cgi"})
-
-#リダイレクトするので、puts されない。
-#puts "<h1>#{title}, updated</h1>"
-#
-#puts "row:" + cgi['row'] + "<br>"
-#puts "col:" + cgi['col'] + "<br>"
-#puts "data:" + cgi['data'] + "<br>"
-
 end
 
 EOD
@@ -104,10 +89,8 @@ EOD
   end
 end
 
-#
 # main
-#
-
+# 
 $debug = false
 infile = 'sample.csv'
 outdir = 'public'
@@ -142,9 +125,9 @@ id integer primary key,
 row int not null,
 col int not null,
 data varchar(255)
-)")
+  )")
 
-r = 0
+r = 1
 c = 0
 CSV.foreach(infile) do |row|
   c = 0
@@ -153,6 +136,10 @@ CSV.foreach(infile) do |row|
     c += 1
   end
   r += 1
+end
+
+(0...c).each do |c|
+  DB[:tbl].insert(row: 0, col:c, data: c)
 end
 
 make_html(outdir, db, title, r, c)
