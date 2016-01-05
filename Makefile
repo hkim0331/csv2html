@@ -7,9 +7,8 @@ all:
 sample:
 	./csv2html.rb --input sample.csv --outdir public --title sample --database sqlite3.db
 
-# server は ruby の HTTP サーバ。
 start:
-	./server --root public 2>&1 | ./pid.rb &
+	./server.rb --root public 2>&1 | ./pid.rb &
 
 stop:
 	kill -INT `cat pid`
