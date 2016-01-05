@@ -1,11 +1,7 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-<<<<<<< HEAD
-VERSION = '0.1.3'
-=======
 VERSION = '0.2'
->>>>>>> release/0.2
 
 require 'sequel'
 require 'csv'

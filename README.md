@@ -33,7 +33,7 @@ $ ./csv2html.rb --input input.csv --outdir public --db sqlite3.db --title title
 * ノート、キャプション？補足説明 --- テーブルのほかに表示したいテキストもある。
 * アップデートしたのがわかりにくい。
 * 行幅をコマンドライン、あるいは、ページ上から指定できるようにする。
-* 行番号、列番号を表示するか？ -- 列番号 done. 行のタイトルもデータベースに？
+* [SOLVED: 行番号、列番号を表示するか？ -- 最初の列を列 0 としてデータベースに入れる。]
 * [SOLVED: CSS --- テーブルの列の間が上下に広すぎる。by form {margin:0px;}]
 * [SOLVED: 実行の度に rm -r out はめんどくさいぞ。by 'make clean'.]
 
