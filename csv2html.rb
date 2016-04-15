@@ -65,7 +65,7 @@ EOH
         puts "<td><form method='post'>"
         puts "<input type='hidden' name='row' value='" + row.to_s + "'>"
         puts "<input type='hidden' name='col' value='" + col.to_s + "'>"
-        puts "<input name='data' value='" + item[:data] + "'>"
+        puts "<input class='c" + col.to_s + "' name='data' value='" + item[:data] + "'>"
         puts "</form></td>"
       end
     end
