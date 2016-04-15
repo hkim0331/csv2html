@@ -1,2 +1,5 @@
-public/
-pid
+/public/
+!/public/.placeholder
+/data/
+!/data/sample.csv
+
